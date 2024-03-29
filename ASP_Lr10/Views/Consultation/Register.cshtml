@@ -1,0 +1,54 @@
+﻿@model ASP_Lr10.Models.ConsultationRegistration
+
+@{
+    Layout = null;
+    ViewBag.Title = "Реєстрація на консультацію";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <h2>@ViewBag.Title</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FullName, "Ім'я та Прізвище")
+            @Html.TextBoxFor(model => model.FullName)
+            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "error" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, "Електронна пошта")
+            @Html.TextBoxFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DesiredConsultationDate, "Бажана дата консультації")
+            @Html.TextBoxFor(model => model.DesiredConsultationDate, "{0:yyyy-MM-dd}", new { @type = "date" })
+            @Html.ValidationMessageFor(model => model.DesiredConsultationDate, "", new { @class = "error" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Product, "Продукт консультації")
+            @Html.DropDownListFor(model => model.Product, new SelectList(
+                new List<Object>{
+                    new { value = "JavaScript", text = "JavaScript"},
+                    new { value = "C#", text = "C#"},
+                    new { value = "Java", text = "Java"},
+                    new { value = "Python", text = "Python"},
+                    new { value = "Основи", text = "Основи"}
+                }, "value", "text", 1))
+            @Html.ValidationMessageFor(model => model.Product, "", new { @class = "error" })
+        </div>
+
+        <button type="submit">Зареєструвати</button>
+    }
+</body>
+</html>
